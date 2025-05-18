@@ -1,0 +1,13 @@
+# 1) 默认（OpenAI Vision）
+python run.py --mode vision --model gpt-4o-mini
+
+# 2) 纯文本 + OpenAI 3.5（省 token）
+python run.py --mode text --model gpt-3.5-turbo
+
+# 3) Azure OpenAI Vision
+python run.py --vendor azure --endpoint https://YOUR.azure.com/openai \
+              --api_key $AZURE_KEY --mode vision --model your-deployment-name
+
+# 4) DeepSeek Chat 文本
+python run.py --vendor deepseek --endpoint https://api.deepseek.com/v1 \
+              --api_key $DEEPSEEK_KEY --mode text --model deepseek-chat
