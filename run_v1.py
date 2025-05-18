@@ -1,15 +1,9 @@
 # run_v1.py
 import argparse, time, os
-# 修改为绝对导入
 from desktop_agent.core.flow_manager import FlowManager
 from desktop_agent.core.executor import Executor
-import argparse
-import os
-import sys
 from pathlib import Path
 
-# 添加项目根目录到Python路径
-sys.path.append(str(Path(__file__).parent))
 
 def verify_and_retry_save(path, max_retry=3):
     """验证保存结果并重试"""
@@ -44,18 +38,6 @@ if __name__ == "__main__":
     parser.add_argument("--model",  help="模型名或部署名", default="gpt-4o-mini")
     parser.add_argument("--endpoint", help="自定义 endpoint(base_url)", default=None)
     parser.add_argument("--api_key",  help="API Key(可用环境变量代替)", default=None)
-    # 新增日志分析参数
-    parser.add_argument("--analyzers",
-                        nargs="+",
-                        choices=["pycharm", "excel"],
-                        default=["pycharm"],
-                        help="启用的日志分析器")
-
-    parser.add_argument("--optimizers",
-                        nargs="+",
-                        choices=["llm"],
-                        default=["llm"],
-                        help="启用的优化器")
     args = parser.parse_args()
 
     provider_kw = {}
@@ -94,17 +76,10 @@ if __name__ == "__main__":
 
     # 修改目标设置
     goal = f"在记事本写入 'Unified interface demo' 并保存到 {SAVE_PATH}"
-    # 初始化FlowManager
-    flow = FlowManager(
-        goal="你的任务目标",
-        mode=args.mode,
-        vendor=args.vendor,
-        model=args.model,
-        provider_kwargs=provider_kw,
-        log_analyzers=args.analyzers,
-        optimizers=args.optimizers
-    )
-
-    flow.run()
+    FlowManager(goal,
+                mode=args.mode,
+                vendor=args.vendor,
+                model=args.model,
+                provider_kwargs=provider_kw).run()
     verify_and_retry_save(SAVE_PATH)
 

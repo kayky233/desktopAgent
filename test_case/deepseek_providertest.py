@@ -1,4 +1,4 @@
-from provider import DeepSeekProvider
+from desktop_agent.core.provider import DeepSeekProvider
 import os
 prov = DeepSeekProvider(
     model="deepseek-chat",

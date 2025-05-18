@@ -199,12 +199,10 @@ class Executor:
             print(f"执行命令: {cmd}")  # 调试日志
 
             match act:
+                # desktop_agent/core/executor.py （dispatch 内）
                 case "focus_window":
-                    self.focus_window(
-                        a.get("title"),
-                        a.get("class_name"),
-                        a.get("process_name")
-                    )
+                    title = a.get("title") or a.get("window_title")
+                    self.focus_window(title)
                 case "click_ctrl":
                     self.click_ctrl(a["title"], a["ctrl"])
                 case "click":
